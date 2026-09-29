@@ -5,7 +5,7 @@
 package peristencia;
 
 /**
- *
+ * esta clase sera estatica para comprobar un funcionamiento antes de la conexion
  * @author melis
  */
 public class ClienteDAO {
