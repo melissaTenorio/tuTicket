@@ -69,13 +69,32 @@ public class EventoDAO implements IEventoDAO {
     }
 
     @Override
+    public Evento agregar(Evento evento) throws Exception {
+
+        return evento;
+    }
+
+    @Override
+    public Evento actualizar(Evento evento) throws Exception {
+
+        return evento;
+    }
+
+    @Override
+    public boolean eliminar(long id) throws Exception {
+
+        return true;
+    }
+
+    @Override
     public Evento guardar(Evento evento) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public Evento buscarPorID(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        return null;
     }
 
     @Override
@@ -84,8 +103,10 @@ public class EventoDAO implements IEventoDAO {
     }
 
     @Override
-    public List<Evento> Obten() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public List<Evento> ObtenTodos() {
+        //dalta lofica
+return new ArrayList<>();    }
+
+  
     
 }

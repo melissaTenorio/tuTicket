@@ -10,8 +10,8 @@ import java.util.List;
  * @author melis
  */
 public interface ICompraDAO {
-    Compra guardar(Compra compra);
-    Compra buscarPorId(Long id);
-    List<Compra> obtenerPorCliente(Long idCliente);
+    Compra guardar(Compra compra)throws Exception;
+    Compra buscarPorId(Long id)throws Exception;
+    List<Compra> obtenerPorCliente(Long idCliente)throws Exception;
     List<Compra> obtenerTodas();
 }
