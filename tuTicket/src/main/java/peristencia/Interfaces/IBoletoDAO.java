@@ -12,9 +12,8 @@ import java.util.List;
  */
 public interface IBoletoDAO {
     BoletoDTO guardar(BoletoDTO boleto) throws SQLException;
-    void guardarLote(List<BoletoDTO> boletos);
-    BoletoDTO buscarID(long id);
-    List<BoletoDTO> obtenerPorEvento(long idEvento);
-    List<BoletoDTO> obtenerBoletoDisponible(long idEvento);
-    
+    boolean guardarLote(List<BoletoDTO> boletos) throws SQLException;
+    BoletoDTO buscarID(long id) throws SQLException;
+    List<BoletoDTO> obtenerPorEvento(long idEvento) throws SQLException;
+    boolean actualizarEstado(long idBoleto, String nuevoEstado) throws SQLException; 
 }

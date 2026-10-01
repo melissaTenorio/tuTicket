@@ -60,31 +60,102 @@ public class BoletoDAO implements IBoletoDAO {
                 ps.setString(3, boletoDTO.getEstado());
                 ps.setLong(4, boletoDTO.getIdEvento());
                 
-               // ps.executeUpdate()
+                int filasAfectadas = ps.executeUpdate(); 
+                
+                
+                if (filasAfectadas > 0){
+                    try(ResultSet rs = ps.getGeneratedKeys()){
+                        if(rs.next()){
+                            boletoDTO.setIdBoleto(rs.getLong(1));
+                        }
+                    }
+                }
         }
+        return boletoDTO;
+    }
+
+    @Override
+    public boolean guardarLote(List<BoletoDTO> boletos) throws SQLException {
+        String sql = "INSERT INTO boleto(id_boleto, codigo_boleto, precio, estado, id_evento) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection con = conexionDB.crearConexion();
+                PreparedStatement ps = con.prepareStatement(sql)){
+            
+            for(BoletoDTO b : boletos){
+                ps.setString(1, b.getCodigo_boleto());
+                ps.setDouble(2, b.getPrecio());
+                ps.setString(3, b.getEstado());
+                ps.setLong(4, b.getIdEvento());
+                ps.addBatch();
+            }
+            
+            int[] resultados = ps.executeBatch();
+            return resultados.length > 0;
+        }   
+
+    }
+
+    @Override
+    public BoletoDTO buscarID(long id) throws SQLException{
+        String sql = "SELECT id_boleto, codigo_boleto, precio, estado_boleto, id_evento" +
+                "FROM boleto WHERE id_boleto"; 
         
-
-return null;
+        try(Connection con = conexionDB.crearConexion(); 
+                PreparedStatement ps = con.prepareStatement(sql)){
+            
+            ps.setLong(1, id);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    return mapearBoleto(rs); 
+                }
+            }
+        }
+        return null; 
     }
 
     @Override
-    public void guardarLote(List<BoletoDTO> boletos) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<BoletoDTO> obtenerPorEvento(long idEvento) throws SQLException{
+        List<BoletoDTO> lista = new ArrayList();
+        String sql = "SELECT id_boleto, codigo_boleto, precio, estado_boleto, id_evento" + "FROM bole WHERE id_evento = ? AND estado_boleto = 'disponible'";
+        
+        try(Connection con = conexionDB.crearConexion();
+                PreparedStatement ps = con.prepareStatement(sql)){
+            
+            ps.setLong(1, idEvento);
+            try(ResultSet rs = ps.executeQuery()){
+                while(rs.next()){
+                    lista.add(mapearBoleto(rs)); 
+                }
+            }
+        }
+        return lista;
     }
 
     @Override
-    public BoletoDTO buscarID(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean actualizarEstado(long idBoleto, String nuevoEstado) throws SQLException {
+        String sql = "UPDATE boleto SET estado_bolet = ? WHERE id_boleto = ?"; 
+        
+        try(Connection con = conexionDB.crearConexion(); 
+                PreparedStatement ps = con.prepareStatement(sql)){
+            
+            ps.setString(1, nuevoEstado);
+            ps.setLong(2, idBoleto);
+            
+            
+            return ps.executeUpdate() > 0; 
+        }
+    } 
+
+    
+    private BoletoDTO mapearBoleto(ResultSet rs) throws SQLException {
+        return new BoletoDTO(
+        rs.getLong("id_boleto"),
+        rs.getString("codigo_boleto"),
+        rs.getDouble("precio"),
+        rs.getString("estado_boleto"),
+        rs.getLong("id_boleto")
+        );
     }
 
-    @Override
-    public List<BoletoDTO> obtenerPorEvento(long idEvento) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<BoletoDTO> obtenerBoletoDisponible(long idEvento) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+   
 }
