@@ -37,7 +37,8 @@ public class EventoDAO implements IEventoDAO {
             while (rs.next()) {
                 Evento evento = new Evento();
                 evento.setId(rs.getInt("id"));
-               // faltan atributos aqui 
+                evento.setNombreEvento(rs.getString("nombre"));
+                
                 eventos.add(evento);
             }
         } catch (SQLException e) {
