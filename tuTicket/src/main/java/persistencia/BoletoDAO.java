@@ -60,16 +60,29 @@ public class BoletoDAO implements IBoletoDAO {
                 ps.setString(3, boletoDTO.getEstado());
                 ps.setLong(4, boletoDTO.getIdEvento());
                 
-               // ps.executeUpdate()
+                int filasAfectadas = ps.executeUpdate(); 
+                
+                
+                if (filasAfectadas > 0){
+                    try(ResultSet rs = ps.getGeneratedKeys()){
+                        if(rs.next()){
+                            boletoDTO.setIdBoleto(rs.getLong(1));
+                        }
+                    }
+                }
         }
-        
-
-return null;
+        return null;
     }
 
     @Override
     public void guardarLote(List<BoletoDTO> boletos) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO boleto(id_boleto, codigo_boleto, precio, estado, id_evento) VALUES (?, ?, ?, ?, ?)";
+
+        //try(Connection con = conexionDB.crearConexion(); 
+          //      PreparedStatement ps = con.prepareStatement(sql)){
+        //
+        
+
     }
 
     @Override
