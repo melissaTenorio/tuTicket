@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface IClienteDAO {
     
-    Cliente guardar (Cliente cliente);
-    Cliente buscarID (long id);
+    Cliente guardar (Cliente cliente) throws Exception;
+    Cliente buscarID (long id) throws Exception;
     Cliente buscarUsuario(String usuario); // pa calarle
-    List <Cliente> obtener();
+    List <Cliente> obtenerTodos()throws Exception;
     
 }
