@@ -107,6 +107,10 @@ public class Boleto {
     public void setIdCompra(long idCompra) {
         this.idCompra = idCompra;
     }
+
+    public void setPrecio(double precio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
     

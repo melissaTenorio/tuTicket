@@ -4,6 +4,12 @@
  */
 package persistencia;
 
+import entidades.DetalleCompra;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Date;
 import peristencia.Interfaces.IDetalleCompra;
 
@@ -11,85 +17,62 @@ import peristencia.Interfaces.IDetalleCompra;
  *
  * @author melis
  */
-public class DetalleCompraDAO implements IDetalleCompra{
-    private Long id;
-    private String bancoOrigen;
-    private String cuentaOrigen;
-    private String claveRastreo;
-    private double monto;
-    private Date fechaTransferencia;
-    private Long idCompra;
+public class DetalleCompraDAO implements IDetalleCompra {
+
+    private final IConexionDB conexionDB;
 
     public DetalleCompraDAO() {
+        this.conexionDB = new ConexionDB();
+
     }
 
-    public DetalleCompraDAO(Long id, String bancoOrigen, String cuentaOrigen, String claveRastreo, double monto, Date fechaTransferencia, Long idCompra) {
-        this.id = id;
-        this.bancoOrigen = bancoOrigen;
-        this.cuentaOrigen = cuentaOrigen;
-        this.claveRastreo = claveRastreo;
-        this.monto = monto;
-        this.fechaTransferencia = fechaTransferencia;
-        this.idCompra = idCompra;
+    @Override
+    public DetalleCompra guardar(DetalleCompra detalleCompra) throws Exception {
+        String sql = "INSERT INTO detalle_compra (banco_origen, cuenta_origen, clave_rastreo, monto, fecha_transferencia, id_compra) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection con = conexionDB.crearConexion(); PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, detalleCompra.getBancoOrigen());
+            ps.setString(2, detalleCompra.getCuentaOrigen());
+            ps.setString(3, detalleCompra.getFolioCompra());
+            ps.setDouble(4, detalleCompra.getMonto());
+            ps.setTimestamp(5, new Timestamp(detalleCompra.getFecha().getTime()));
+            ps.setLong(6, detalleCompra.getIdCompra());
+
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    detalleCompra.setId(rs.getLong(1));
+                }
+            }
+        }
+        return detalleCompra;
+
     }
 
-    public Long getId() {
-        return id;
-    }
+    @Override
+    public DetalleCompra buscarPorIdCompra(Long idCompra) throws Exception {
+        String sql = "SELECT id, banco_origen, cuenta_origen, clave_rastreo, monto, fecha_transferencia, id_compra FROM detalle_compra WHERE id_compra = ?";
+        DetalleCompra detalle = null;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+        try (Connection con = conexionDB.crearConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-    public String getBancoOrigen() {
-        return bancoOrigen;
+            ps.setLong(1, idCompra);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    detalle = new DetalleCompra(
+                            rs.getLong("id"),
+                            rs.getString("banco_origen"),
+                            rs.getString("cuenta_origen"),
+                            rs.getString("clave_rastreo"),
+                            rs.getTimestamp("fecha_transferencia"),
+                            rs.getDouble("monto"),
+                            rs.getLong("id_compra")
+                    );
+                }
+            }
+        }
+        return detalle;
     }
-
-    public void setBancoOrigen(String bancoOrigen) {
-        this.bancoOrigen = bancoOrigen;
-    }
-
-    public String getCuentaOrigen() {
-        return cuentaOrigen;
-    }
-
-    public void setCuentaOrigen(String cuentaOrigen) {
-        this.cuentaOrigen = cuentaOrigen;
-    }
-
-    public String getClaveRastreo() {
-        return claveRastreo;
-    }
-
-    public void setClaveRastreo(String claveRastreo) {
-        this.claveRastreo = claveRastreo;
-    }
-
-    public double getMonto() {
-        return monto;
-    }
-
-    public void setMonto(double monto) {
-        this.monto = monto;
-    }
-
-    public Date getFechaTransferencia() {
-        return fechaTransferencia;
-    }
-
-    public void setFechaTransferencia(Date fechaTransferencia) {
-        this.fechaTransferencia = fechaTransferencia;
-    }
-
-    public Long getIdCompra() {
-        return idCompra;
-    }
-
-    public void setIdCompra(Long idCompra) {
-        this.idCompra = idCompra;
-    }
-    
-    
-    
-    
 }

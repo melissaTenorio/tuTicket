@@ -4,10 +4,14 @@
  */
 package Negocio;
 
+import entidades.Compra;
+import entidades.DetalleCompra;
+import entidades.Evento;
+
 /**
  *
  * @author melis
  */
 public interface ICompraNegocio {
-    
+    Compra registrarCompraConTransferencia(Long idCliente, Evento evento, int cantidad, DetalleCompra detalle) throws Exception;
 }
