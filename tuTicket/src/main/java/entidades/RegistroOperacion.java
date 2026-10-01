@@ -12,23 +12,25 @@ import java.time.LocalDateTime;
  */
 public class RegistroOperacion {
     private long id;
-    private long idCuentaCliente;
+    private long idUsuario;
     private String tipoOperacion;
-    private double monto;
+    private double monto; // para saber cuantos e pago
     private LocalDateTime fechaHora;
 
     public RegistroOperacion() {
     }
 
-    
-    
-    public RegistroOperacion(long id, long idCuentaCliente, String tipoOperacion, double monto, LocalDateTime fechaHora) {
-        this.id  = id;
-        this.idCuentaCliente = idCuentaCliente;
+    public RegistroOperacion(long id, long idUsuario, String tipoOperacion, double monto, LocalDateTime fechaHora) {
+        this.id = id;
+        this.idUsuario = idUsuario;
         this.tipoOperacion = tipoOperacion;
         this.monto = monto;
         this.fechaHora = fechaHora;
     }
+
+    
+    
+    
 
     public long getId() {
         return id;
@@ -38,14 +40,15 @@ public class RegistroOperacion {
         this.id = id;
     }
 
-    public long getIdCuentaCliente() {
-        return idCuentaCliente;
+    public long getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdCuentaCliente(long idCuentaCliente) {
-        this.idCuentaCliente = idCuentaCliente;
+    public void setIdUsuario(long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
+  
     public String getTipoOperacion() {
         return tipoOperacion;
     }

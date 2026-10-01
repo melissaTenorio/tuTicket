@@ -4,10 +4,16 @@
  */
 package entidades;
 
+import java.util.Date;
+
 /**
  *
  * @author melis
  */
 public class detalleCompra {
-    
+    private long id;
+    private String folioCompra;
+    private Date fecha; //la fecha de la compra
+    private double monto;
+    private long idCompra;
 }

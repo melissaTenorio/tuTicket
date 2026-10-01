@@ -11,22 +11,22 @@ package entidades;
 public class CuentaCliente {
     private long id;
         private long idCliente;
-    private String banco;
-    private String numeroCuenta;
-    private double saldo;
+    private String usuario;
+    private String contraseña;
 
     public CuentaCliente() {
     }
 
-    
-    
-    public CuentaCliente(long id, long idCliente, String banco, String numeroCuenta, double saldo) {
+    public CuentaCliente(long id, long idCliente, String usuario, String contraseña) {
         this.id = id;
         this.idCliente = idCliente;
-        this.banco = banco;
-        this.numeroCuenta = numeroCuenta;
-        this.saldo = saldo;
+        this.usuario = usuario;
+        this.contraseña = contraseña;
     }
+
+    
+    
+
 
     public long getId() {
         return id;
@@ -44,30 +44,22 @@ public class CuentaCliente {
         this.idCliente = idCliente;
     }
 
-    public String getBanco() {
-        return banco;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setBanco(String banco) {
-        this.banco = banco;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getNumeroCuenta() {
-        return numeroCuenta;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-    
-    
+        
     
 }

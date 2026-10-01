@@ -11,20 +11,19 @@ package entidades;
 class CuentaPromotora {
     private long id;
     private long idPromotora;
-    private String banco;
-    private String numeroCuenta;
-     private double saldo;
+    private String usuario;
+    private String contraseña;
 
     public CuentaPromotora() {
     }
 
-    public CuentaPromotora(long id, long idPromotora, String banco, String numeroCuenta, double saldo) {
+    public CuentaPromotora(long id, long idPromotora, String usuario, String contraseña) {
         this.id = id;
         this.idPromotora = idPromotora;
-        this.banco = banco;
-        this.numeroCuenta = numeroCuenta;
-        this.saldo = saldo;
+        this.usuario = usuario;
+        this.contraseña = contraseña;
     }
+
 
     public long getId() {
         return id;
@@ -42,29 +41,23 @@ class CuentaPromotora {
         this.idPromotora = idPromotora;
     }
 
-    public String getBanco() {
-        return banco;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setBanco(String banco) {
-        this.banco = banco;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getNumeroCuenta() {
-        return numeroCuenta;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
-    public double getSaldo() {
-        return saldo;
-    }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
      
      
      

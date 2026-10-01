@@ -14,7 +14,7 @@ public class Boleto {
     private long id;
     private String numeroBoleto;
     private String lugar;
-    private String nombreEvento;
+    private String evento;
     private double precioUnitario;
     private Date fechaHora;
     private String estado;
@@ -24,11 +24,11 @@ public class Boleto {
     public Boleto() {
     }
 
-    public Boleto(long id, String numeroBoleto, String lugar, String nombreEvento, double precioUnitario, Date fechaHora, String estado, long idEvento, long idCompra) {
+    public Boleto(long id, String numeroBoleto, String lugar, String evento, double precioUnitario, Date fechaHora, String estado, long idEvento, long idCompra) {
         this.id = id;
         this.numeroBoleto = numeroBoleto;
         this.lugar = lugar;
-        this.nombreEvento = nombreEvento;
+        this.evento = evento;
         this.precioUnitario = precioUnitario;
         this.fechaHora = fechaHora;
         this.estado = estado;
@@ -61,11 +61,11 @@ public class Boleto {
     }
 
     public String getNombreEvento() {
-        return nombreEvento;
+        return evento;
     }
 
     public void setNombreEvento(String nombreEvento) {
-        this.nombreEvento = nombreEvento;
+        this.evento = nombreEvento;
     }
 
     public double getPrecioUnitario() {

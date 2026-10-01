@@ -13,23 +13,19 @@ import java.time.LocalDate;
 public class Compra {
     private long id;
         private long idCliente;
-        private long idBoleto;
-                private long idCuentaCliente;
-    private LocalDate fechaHora;
-    private double precio;
-    private String estado;
+    private LocalDate fechaHora;// detalle compra
+    private double montoTotal; // lo que va a pagar
+    private String estado;// detalle compra
     //o detalle compra?
 
     public Compra() {
     }
 
-    public Compra(long id, long idCliente, long idBoleto, long idCuentaCliente, LocalDate fechaHora, double precio, String estado) {
+    public Compra(long id, long idCliente, LocalDate fechaHora, double montoTotal, String estado) {
         this.id = id;
         this.idCliente = idCliente;
-        this.idBoleto = idBoleto;
-        this.idCuentaCliente = idCuentaCliente;
         this.fechaHora = fechaHora;
-        this.precio = precio;
+        this.montoTotal = montoTotal;
         this.estado = estado;
     }
 
@@ -49,22 +45,6 @@ public class Compra {
         this.idCliente = idCliente;
     }
 
-    public long getIdBoleto() {
-        return idBoleto;
-    }
-
-    public void setIdBoleto(long idBoleto) {
-        this.idBoleto = idBoleto;
-    }
-
-    public long getIdCuentaCliente() {
-        return idCuentaCliente;
-    }
-
-    public void setIdCuentaCliente(long idCuentaCliente) {
-        this.idCuentaCliente = idCuentaCliente;
-    }
-
     public LocalDate getFechaHora() {
         return fechaHora;
     }
@@ -73,12 +53,12 @@ public class Compra {
         this.fechaHora = fechaHora;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getMontoTotal() {
+        return montoTotal;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setMontoTotal(double montoTotal) {
+        this.montoTotal = montoTotal;
     }
 
     public String getEstado() {
@@ -90,5 +70,6 @@ public class Compra {
     }
 
    
+    
     
 }

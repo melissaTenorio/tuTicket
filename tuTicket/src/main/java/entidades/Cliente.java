@@ -12,15 +12,15 @@ import java.util.List;
  *
  * @author melis
  */
-public class Cliente {
+public class Cliente extends Usuario{
 
     private long id;
     private String nombres;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private LocalDate fechaNacimiento;
-    private String usuario;
-    private String contraseña;
+    private String correo;
+    private String tel;
     private List<CuentaCliente> cuentas;
 
     public Cliente() {
@@ -30,17 +30,20 @@ public class Cliente {
         this.cuentas = cuentas;
     }
 
-    public Cliente(long id, String nombres, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String usuario, String contraseña, List<CuentaCliente> cuentas) {
+    public Cliente(long id, String nombres, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento, String correo, String tel, List<CuentaCliente> cuentas) {
         this.id = id;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.fechaNacimiento = fechaNacimiento;
-        this.usuario = usuario;
-        this.contraseña = contraseña;
-        this.cuentas = new ArrayList<>();
+        this.correo = correo;
+        this.tel = tel;
+        this.cuentas = cuentas;
     }
 
+    
+    
+    
     public long getId() {
         return id;
     }
@@ -81,21 +84,6 @@ public class Cliente {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
 
     public List<CuentaCliente> getCuentas() {
         return cuentas;
@@ -103,6 +91,22 @@ public class Cliente {
 
     public void setCuentas(List<CuentaCliente> cuentas) {
         this.cuentas = cuentas;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
     
     

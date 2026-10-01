@@ -15,6 +15,10 @@ public class Promotora {
 
     private long id;
     private String nombreEmpresa;
+        private String rfc;
+    private String correo;
+    private String telefono;
+
     private String calle;
     private String numero;
     private String colonia;
