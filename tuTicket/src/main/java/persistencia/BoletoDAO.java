@@ -4,7 +4,7 @@
  */
 package persistencia;
 
-import entidades.Boleto;
+import dtos.BoletoDTO;
 import peristencia.Interfaces.IBoletoDAO;
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ public class BoletoDAO implements IBoletoDAO {
         this.conexionDB = conexionDB;
     }
 
-    public List<Boleto> consultarBoletosPorEvento(int idEvento) {
-        List<Boleto> boletos = new ArrayList<>();
+    public List<BoletoDTO> consultarBoletosPorEvento(int idEvento) {
+        List<BoletoDTO> boletos = new ArrayList<>();
         String sql = "SELECT id, codigoBoleto, estado precio id_evento FROM boletos where id_evento=?";
 
         try (Connection con = conexionDB.crearConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -32,13 +32,13 @@ public class BoletoDAO implements IBoletoDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Boleto boleto = new Boleto();
-                    boleto.setId(rs.getInt("id"));
-                    boleto.setFolioBoleto(rs.getString("numero_asiento"));
-                    boleto.setEstado(rs.getString("estado"));
-                    boleto.setPrecio(rs.getDouble("precio"));
+                    BoletoDTO boletoDTO = new BoletoDTO();
+                    boletoDTO.setIdBoleto(rs.getLong("id"));
+                    boletoDTO.setCodigo_boleto(rs.getString("numero_asiento"));
+                    boletoDTO.setEstado(rs.getString("estado"));
+                    boletoDTO.setPrecio(rs.getDouble("precio"));
                     
-                    boletos.add(boleto);
+                    boletos.add(boletoDTO);
                 }
             }
 
@@ -46,6 +46,45 @@ public class BoletoDAO implements IBoletoDAO {
             e.printStackTrace();
         }
         return boletos;
+    }
+
+    @Override
+    public BoletoDTO guardar(BoletoDTO boletoDTO) throws SQLException {
+        String sql = "INSERT INTO boleto(id_boleto, codigo_boleto, precio, estado, id_evento) VALUES (?, ?, ?, ?, ?)";
+        
+        try(Connection con = conexionDB.crearConexion(); 
+                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+                ps.setString(1, boletoDTO.getCodigo_boleto());
+                ps.setDouble(2, boletoDTO.getPrecio());
+                ps.setString(3, boletoDTO.getEstado());
+                ps.setLong(4, boletoDTO.getIdEvento());
+                
+               // ps.executeUpdate()
+        }
+        
+
+return null;
+    }
+
+    @Override
+    public void guardarLote(List<BoletoDTO> boletos) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public BoletoDTO buscarID(long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<BoletoDTO> obtenerPorEvento(long idEvento) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<BoletoDTO> obtenerBoletoDisponible(long idEvento) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

@@ -3,17 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package peristencia.Interfaces;
-import entidades.Boleto;
+import dtos.BoletoDTO;
+import java.sql.SQLException;
 import java.util.List;
 /**
  *
  * @author melis
  */
 public interface IBoletoDAO {
-    Boleto guardar(Boleto boleto);
-    void guardarLote(List<Boleto> boletos);
-    Boleto buscarID(long id);
-    List<Boleto> obtenerPorEvento(long idEvento);
-    List<Boleto> obtenerBoletoDisponible(long idEvento);
+    BoletoDTO guardar(BoletoDTO boleto) throws SQLException;
+    void guardarLote(List<BoletoDTO> boletos);
+    BoletoDTO buscarID(long id);
+    List<BoletoDTO> obtenerPorEvento(long idEvento);
+    List<BoletoDTO> obtenerBoletoDisponible(long idEvento);
     
 }

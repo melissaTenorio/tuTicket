@@ -4,6 +4,8 @@
  */
 package persistencia;
 
+import entidades.Compra;
+import java.util.List;
 import peristencia.Interfaces.ICompraDAO;
 
 /**
@@ -15,5 +17,25 @@ public class CompraDAO  implements ICompraDAO {
 
     public CompraDAO(IConexionDB conexionDB) {
         this.conexionDB = conexionDB;
+    }
+
+    @Override
+    public Compra guardar(Compra compra) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Compra buscarPorId(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Compra> obtenerPorCliente(Long idCliente) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Compra> obtenerTodas() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

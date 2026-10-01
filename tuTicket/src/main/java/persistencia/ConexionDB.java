@@ -31,6 +31,11 @@ public class ConexionDB implements IConexionDB {
     public Connection crearConexion() throws SQLException {
         return DriverManager.getConnection(SERVER, USUARIO, CONTRASEÑA); 
     }
+
+    @Override
+    public Connection obtenerConexion() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
      
     
     
