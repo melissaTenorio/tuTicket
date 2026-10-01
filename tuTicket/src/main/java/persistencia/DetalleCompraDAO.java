@@ -2,41 +2,42 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package entidades;
+package persistencia;
 
 import java.util.Date;
+import peristencia.Interfaces.IDetalleCompra;
 
 /**
  *
  * @author melis
  */
-public class DetalleCompra {
-    private long id;
+public class DetalleCompraDAO implements IDetalleCompra{
+    private Long id;
     private String bancoOrigen;
     private String cuentaOrigen;
-    private String folioCompra;
-    private Date fecha; //la fecha de la compra
+    private String claveRastreo;
     private double monto;
-    private long idCompra;
+    private Date fechaTransferencia;
+    private Long idCompra;
 
-    public DetalleCompra() {
+    public DetalleCompraDAO() {
     }
 
-    public DetalleCompra(long id, String bancoOrigen, String cuentaOrigen, String folioCompra, Date fecha, double monto, long idCompra) {
+    public DetalleCompraDAO(Long id, String bancoOrigen, String cuentaOrigen, String claveRastreo, double monto, Date fechaTransferencia, Long idCompra) {
         this.id = id;
         this.bancoOrigen = bancoOrigen;
         this.cuentaOrigen = cuentaOrigen;
-        this.folioCompra = folioCompra;
-        this.fecha = fecha;
+        this.claveRastreo = claveRastreo;
         this.monto = monto;
+        this.fechaTransferencia = fechaTransferencia;
         this.idCompra = idCompra;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,20 +57,12 @@ public class DetalleCompra {
         this.cuentaOrigen = cuentaOrigen;
     }
 
-    public String getFolioCompra() {
-        return folioCompra;
+    public String getClaveRastreo() {
+        return claveRastreo;
     }
 
-    public void setFolioCompra(String folioCompra) {
-        this.folioCompra = folioCompra;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setClaveRastreo(String claveRastreo) {
+        this.claveRastreo = claveRastreo;
     }
 
     public double getMonto() {
@@ -80,13 +73,22 @@ public class DetalleCompra {
         this.monto = monto;
     }
 
-    public long getIdCompra() {
+    public Date getFechaTransferencia() {
+        return fechaTransferencia;
+    }
+
+    public void setFechaTransferencia(Date fechaTransferencia) {
+        this.fechaTransferencia = fechaTransferencia;
+    }
+
+    public Long getIdCompra() {
         return idCompra;
     }
 
-    public void setIdCompra(long idCompra) {
+    public void setIdCompra(Long idCompra) {
         this.idCompra = idCompra;
     }
+    
     
     
     
