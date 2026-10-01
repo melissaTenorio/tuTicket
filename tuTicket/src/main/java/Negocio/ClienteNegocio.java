@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Negocio;
-import peristencia.ClienteDAO; 
+import persistencia.ClienteDAO; 
 import Controlador.Encriptacion;
 import dtos.ClienteDTO; 
 

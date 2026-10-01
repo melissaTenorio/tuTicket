@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author melis
  */
-public interface IcCompraDAO {
+public interface ICompraDAO {
     Compra guardar(Compra compra);
     Compra buscarPorId(Long id);
     List<Compra> obtenerPorCliente(Long idCliente);

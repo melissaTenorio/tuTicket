@@ -1,4 +1,4 @@
-package peristencia; 
+package persistencia; 
 import java.sql.Connection; 
 import java.sql.SQLException; 
 
@@ -9,5 +9,5 @@ import java.sql.SQLException;
 public interface IConexionDB {
     
     Connection crearConexion() throws SQLException; 
-    
+    Connection obtenerConexion() throws SQLException;
 }

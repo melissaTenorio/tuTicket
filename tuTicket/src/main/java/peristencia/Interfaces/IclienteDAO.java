@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author melis
  */
-public interface IclienteDAO {
+public interface IClienteDAO {
     
     Cliente guardar (Cliente cliente);
     Cliente buscarID (long id);

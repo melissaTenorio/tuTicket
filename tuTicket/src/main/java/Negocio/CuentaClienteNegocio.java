@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Negocio;
-import peristencia.CuentaClienteDAO;
-import peristencia.ICuentaClienteDAO;
+import persistencia.CuentaClienteDAO;
+import persistencia.ICuentaClienteDAO;
 import dtos.CuentaClienteDTO;
 
 import java.util.List; 

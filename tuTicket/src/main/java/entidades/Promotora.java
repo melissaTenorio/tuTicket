@@ -20,16 +20,16 @@ public class Promotora {
     private String colonia;
     private String ciudad;
     private String estado;
-    private List<CuentaPrmotora> cuentas;
+    private List<CuentaPromotora> cuentas;
 
     public Promotora() {
     }
 
-    public Promotora(List<CuentaPrmotora> cuentas) {
+    public Promotora(List<CuentaPromotora> cuentas) {
         this.cuentas = new ArrayList<>();
     }
 
-    public Promotora(long id, String nombreEmpresa, String calle, String numero, String colonia, String ciudad, String estado, List<CuentaPrmotora> cuentas) {
+    public Promotora(long id, String nombreEmpresa, String calle, String numero, String colonia, String ciudad, String estado, List<CuentaPromotora> cuentas) {
         this.id = id;
         this.nombreEmpresa = nombreEmpresa;
         this.calle = calle;
@@ -96,11 +96,11 @@ public class Promotora {
         this.estado = estado;
     }
 
-    public List<CuentaPrmotora> getCuentas() {
+    public List<CuentaPromotora> getCuentas() {
         return cuentas;
     }
 
-    public void setCuentas(List<CuentaPrmotora> cuentas) {
+    public void setCuentas(List<CuentaPromotora> cuentas) {
         this.cuentas = cuentas;
     }
 
