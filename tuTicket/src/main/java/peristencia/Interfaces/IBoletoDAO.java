@@ -16,4 +16,6 @@ public interface IBoletoDAO {
     List<BoletoDTO> obtenerPorEvento(long idEvento) throws SQLException;
 List<Boleto> obtenerDisponiblesPorEvento(long idEvento);
 boolean actualizarEstado(long idBoleto, String estado, long idCompra);
+
+    public void guardar(Boleto boleto);
 }

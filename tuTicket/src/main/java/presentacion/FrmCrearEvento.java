@@ -27,7 +27,7 @@ import javax.swing.JTextField;
  *
  * @author melis
  */
-class FrmCrearEvento extends JDialog {
+public class FrmCrearEvento extends JDialog {
     private final IPromotoraNegocio promotoraNegocio;
     
     private JTextField txtNombre;

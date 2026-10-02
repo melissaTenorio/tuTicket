@@ -4,6 +4,7 @@
  */
 package Negocio;
 
+import entidades.Boleto;
 import entidades.Evento;
 import entidades.Promotora;
 import java.util.List;
@@ -53,6 +54,16 @@ public class PromotoraNegocio implements IPromotoraNegocio {
     @Override
     public List<Evento> misEventos(Long idPromotora) {
         return eventoDAO.obtenerPorPromotora(idPromotora);
+    }
+
+    @Override
+    public boolean registrarBoletosEvento(List<Boleto> boletos) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Boleto> obtenerBoletosPorEvento(Long idEvento) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 

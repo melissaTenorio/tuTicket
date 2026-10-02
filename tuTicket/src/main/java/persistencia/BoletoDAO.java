@@ -59,6 +59,7 @@ public class BoletoDAO implements IBoletoDAO {
         }
     }
 
+    @Override
     public List<Boleto> obtenerPorEvento(long idEvento) {
         List<Boleto> lista = new ArrayList<>();
         String sql = "SELECT * FROM boletos WHERE id_evento = ?";
@@ -133,9 +134,16 @@ public class BoletoDAO implements IBoletoDAO {
         return b;
     }
 
-    @Override
+    
     public BoletoDTO guardar(BoletoDTO boleto) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public void guardar(Boleto boleto) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+   
 
 }
