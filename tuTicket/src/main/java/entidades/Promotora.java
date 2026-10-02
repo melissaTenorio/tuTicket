@@ -18,7 +18,7 @@ public class Promotora {
         private String rfc;
     private String correo;
     private String telefono;
-
+private String contraseña;
     private String calle;
     private String numero;
     private String colonia;
@@ -33,6 +33,15 @@ public class Promotora {
         this.cuentas = new ArrayList<>();
     }
 
+    public Promotora(long id, String nombreEmpresa, String rfc, String correo, String contraseña) {
+        this.id = id;
+        this.nombreEmpresa = nombreEmpresa;
+        this.rfc = rfc;
+        this.correo = correo;
+        this.contraseña = contraseña;
+    }
+
+    
     public Promotora(long id, String nombreEmpresa, String calle, String numero, String colonia, String ciudad, String estado, List<CuentaPromotora> cuentas) {
         this.id = id;
         this.nombreEmpresa = nombreEmpresa;
@@ -106,6 +115,38 @@ public class Promotora {
 
     public void setCuentas(List<CuentaPromotora> cuentas) {
         this.cuentas = cuentas;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
     }
 
 }

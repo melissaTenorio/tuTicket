@@ -15,8 +15,8 @@ import peristencia.Interfaces.ICompraDAO;
 public class CompraDAO  implements ICompraDAO {
     private final IConexionDB conexionDB;
 
-    public CompraDAO(IConexionDB conexionDB) {
-        this.conexionDB = conexionDB;
+    public CompraDAO() {
+        this.conexionDB = new ConexionDB();
     }
 
     @Override

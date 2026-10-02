@@ -13,8 +13,10 @@ public interface IEventoDAO {
     Evento agregar(Evento evento) throws Exception;
     Evento actualizar(Evento evento) throws Exception;
     boolean eliminar (long id) throws Exception;
-    Evento guardar(Evento evento);
+    boolean guardar(Evento evento);
     Evento buscarPorID(Long id);
     List<Evento> obtenPromotora(); //deberia buscar por promotora los eventos
-    List<Evento>ObtenTodos(); //Lista de todos los eventos registrados
+    List<Evento>ObtenerTodos(); //Lista de todos los eventos registrados
+
+    public List<Evento> obtenerPorPromotora(Long idPromotora);
 }

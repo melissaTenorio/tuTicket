@@ -5,6 +5,7 @@
 package persistencia;
 
 import dtos.BoletoDTO;
+import entidades.Boleto;
 import peristencia.Interfaces.IBoletoDAO;
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,144 +19,123 @@ public class BoletoDAO implements IBoletoDAO {
 
     private final IConexionDB conexionDB;
 
-    public BoletoDAO(IConexionDB conexionDB) {
-        this.conexionDB = conexionDB;
+    public BoletoDAO() {
+        this.conexionDB = new ConexionDB();
     }
 
-    public List<BoletoDTO> consultarBoletosPorEvento(int idEvento) {
-        List<BoletoDTO> boletos = new ArrayList<>();
-        String sql = "SELECT id, codigoBoleto, estado precio id_evento FROM boletos where id_evento=?";
+    public boolean guardarLote(List<Boleto> boletos) {
+        String sql = "INSERT INTO boletos (numero_boleto, lugar, evento, precio_unitario, fecha_hora, estado, id_evento, id_compra) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = conexionDB.crearConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = conexionDB.crearConexion()) {
+            con.setAutoCommit(false); // Transacción manual para optimizar inserción masiva
 
-            ps.setInt(1, idEvento);
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                for (Boleto b : boletos) {
+                    ps.setString(1, b.getNumeroBoleto());
+                    ps.setString(2, b.getLugar());
+                    ps.setString(3, b.getNombreEvento());
+                    ps.setDouble(4, b.getPrecioUnitario());
+                    ps.setTimestamp(5, new Timestamp(b.getFechaHora().getTime()));
+                    ps.setString(6, b.getEstado());
+                    ps.setLong(7, b.getIdEvento());
+                    ps.setLong(8, b.getIdCompra());
+
+                    ps.addBatch();
+                }
+
+                ps.executeBatch();
+                con.commit(); // Confirmar transacción
+                return true;
+
+            } catch (SQLException e) {
+                con.rollback(); // Revertir en caso de falla
+                e.printStackTrace();
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Boleto> obtenerPorEvento(long idEvento) {
+        List<Boleto> lista = new ArrayList<>();
+        String sql = "SELECT * FROM boletos WHERE id_evento = ?";
+
+        try (Connection con = conexionDB.crearConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setLong(1, idEvento);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    BoletoDTO boletoDTO = new BoletoDTO();
-                    boletoDTO.setIdBoleto(rs.getLong("id"));
-                    boletoDTO.setCodigo_boleto(rs.getString("numero_asiento"));
-                    boletoDTO.setEstado(rs.getString("estado"));
-                    boletoDTO.setPrecio(rs.getDouble("precio"));
-                    
-                    boletos.add(boletoDTO);
+                    lista.add(extraerBoleto(rs));
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        return boletos;
-    }
-
-    @Override
-    public BoletoDTO guardar(BoletoDTO boletoDTO) throws SQLException {
-        String sql = "INSERT INTO boleto(id_boleto, codigo_boleto, precio, estado, id_evento) VALUES (?, ?, ?, ?, ?)";
-        
-        try(Connection con = conexionDB.crearConexion(); 
-                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            
-                ps.setString(1, boletoDTO.getCodigo_boleto());
-                ps.setDouble(2, boletoDTO.getPrecio());
-                ps.setString(3, boletoDTO.getEstado());
-                ps.setLong(4, boletoDTO.getIdEvento());
-                
-                int filasAfectadas = ps.executeUpdate(); 
-                
-                
-                if (filasAfectadas > 0){
-                    try(ResultSet rs = ps.getGeneratedKeys()){
-                        if(rs.next()){
-                            boletoDTO.setIdBoleto(rs.getLong(1));
-                        }
-                    }
-                }
-        }
-        return boletoDTO;
-    }
-
-    @Override
-    public boolean guardarLote(List<BoletoDTO> boletos) throws SQLException {
-        String sql = "INSERT INTO boleto(id_boleto, codigo_boleto, precio, estado, id_evento) VALUES (?, ?, ?, ?, ?)";
-
-        try (Connection con = conexionDB.crearConexion();
-                PreparedStatement ps = con.prepareStatement(sql)){
-            
-            for(BoletoDTO b : boletos){
-                ps.setString(1, b.getCodigo_boleto());
-                ps.setDouble(2, b.getPrecio());
-                ps.setString(3, b.getEstado());
-                ps.setLong(4, b.getIdEvento());
-                ps.addBatch();
-            }
-            
-            int[] resultados = ps.executeBatch();
-            return resultados.length > 0;
-        }   
-
-    }
-
-    @Override
-    public BoletoDTO buscarID(long id) throws SQLException{
-        String sql = "SELECT id_boleto, codigo_boleto, precio, estado_boleto, id_evento" +
-                "FROM boleto WHERE id_boleto"; 
-        
-        try(Connection con = conexionDB.crearConexion(); 
-                PreparedStatement ps = con.prepareStatement(sql)){
-            
-            ps.setLong(1, id);
-            try(ResultSet rs = ps.executeQuery()){
-                if(rs.next()){
-                    return mapearBoleto(rs); 
-                }
-            }
-        }
-        return null; 
-    }
-
-    @Override
-    public List<BoletoDTO> obtenerPorEvento(long idEvento) throws SQLException{
-        List<BoletoDTO> lista = new ArrayList();
-        String sql = "SELECT id_boleto, codigo_boleto, precio, estado_boleto, id_evento" + "FROM bole WHERE id_evento = ? AND estado_boleto = 'disponible'";
-        
-        try(Connection con = conexionDB.crearConexion();
-                PreparedStatement ps = con.prepareStatement(sql)){
-            
-            ps.setLong(1, idEvento);
-            try(ResultSet rs = ps.executeQuery()){
-                while(rs.next()){
-                    lista.add(mapearBoleto(rs)); 
-                }
-            }
         }
         return lista;
     }
 
     @Override
-    public boolean actualizarEstado(long idBoleto, String nuevoEstado) throws SQLException {
-        String sql = "UPDATE boleto SET estado_bolet = ? WHERE id_boleto = ?"; 
-        
-        try(Connection con = conexionDB.crearConexion(); 
-                PreparedStatement ps = con.prepareStatement(sql)){
-            
-            ps.setString(1, nuevoEstado);
-            ps.setLong(2, idBoleto);
-            
-            
-            return ps.executeUpdate() > 0; 
-        }
-    } 
+    public List<Boleto> obtenerDisponiblesPorEvento(long idEvento) {
+        List<Boleto> lista = new ArrayList<>();
+        String sql = "SELECT * FROM boletos WHERE id_evento = ? AND estado = 'DISPONIBLE'";
 
-    
-    private BoletoDTO mapearBoleto(ResultSet rs) throws SQLException {
-        return new BoletoDTO(
-        rs.getLong("id_boleto"),
-        rs.getString("codigo_boleto"),
-        rs.getDouble("precio"),
-        rs.getString("estado_boleto"),
-        rs.getLong("id_boleto")
-        );
+        try (Connection con = conexionDB.crearConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setLong(1, idEvento);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(extraerBoleto(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 
-   
+    @Override
+    public boolean actualizarEstado(long idBoleto, String estado, long idCompra) {
+        String sql = "UPDATE boletos SET estado = ?, id_compra = ? WHERE id = ?";
+
+        try (Connection con = conexionDB.crearConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, estado);
+            ps.setLong(2, idCompra);
+            ps.setLong(3, idBoleto);
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Método auxiliar para mapear el ResultSet a un objeto Boleto
+    private Boleto extraerBoleto(ResultSet rs) throws SQLException {
+        Boleto b = new Boleto();
+        b.setId(rs.getLong("id"));
+        b.setNumeroBoleto(rs.getString("numero_boleto"));
+        b.setLugar(rs.getString("lugar"));
+        b.setNombreEvento(rs.getString("evento"));
+        b.setPrecioUnitario(rs.getDouble("precio_unitario"));
+        b.setFechaHora(rs.getTimestamp("fecha_hora"));
+        b.setEstado(rs.getString("estado"));
+        b.setIdEvento(rs.getLong("id_evento"));
+        b.setIdCompra(rs.getLong("id_compra"));
+        return b;
+    }
+
+    @Override
+    public BoletoDTO guardar(BoletoDTO boleto) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

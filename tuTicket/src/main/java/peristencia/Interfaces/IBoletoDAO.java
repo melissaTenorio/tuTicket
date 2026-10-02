@@ -4,6 +4,7 @@
  */
 package peristencia.Interfaces;
 import dtos.BoletoDTO;
+import entidades.Boleto;
 import java.sql.SQLException;
 import java.util.List;
 /**
@@ -11,9 +12,8 @@ import java.util.List;
  * @author melis
  */
 public interface IBoletoDAO {
-    BoletoDTO guardar(BoletoDTO boleto) throws SQLException;
     boolean guardarLote(List<BoletoDTO> boletos) throws SQLException;
-    BoletoDTO buscarID(long id) throws SQLException;
     List<BoletoDTO> obtenerPorEvento(long idEvento) throws SQLException;
-    boolean actualizarEstado(long idBoleto, String nuevoEstado) throws SQLException; 
+List<Boleto> obtenerDisponiblesPorEvento(long idEvento);
+boolean actualizarEstado(long idBoleto, String estado, long idCompra);
 }

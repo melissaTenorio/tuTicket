@@ -8,6 +8,7 @@ import entidades.Boleto;
 import entidades.Compra;
 import entidades.DetalleCompra;
 import entidades.Evento;
+import java.time.LocalDate;
 import java.util.Date;
 import peristencia.Interfaces.IBoletoDAO;
 import peristencia.Interfaces.ICompraDAO;
@@ -45,7 +46,7 @@ public class CompraNegocio implements ICompraNegocio{
 
         // 2. Crear y guardar registro de Compra
         Compra compra = new Compra();
-        compra.setFechaHora(new Date());
+        compra.setFechaHora(LocalDate.EPOCH);
         compra.setMontoTotal(total);
         compra.setEstado("Completada");
         compra.setIdCliente(idCliente);
